@@ -10,6 +10,7 @@ import {
 
 import Home from './components/Home';
 import Navbar from './components/Navbar';
+import Search from './components/Search';
 
 
 const theme = createMuiTheme({
@@ -25,6 +26,7 @@ function App() {
         <Navbar content={
           <span>
             <Route exact path="/" component={Home} />
+            <Route exact path="/search" component={Search} />
           </span>
         } />
       </BrowserRouter>
