@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const TMDB_KEY = window._env_.TMDB_KEY;
+const TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
 const language = 'de-DE';
 
 var Tmdb = {};
@@ -15,7 +15,10 @@ var Tmdb = {};
 Tmdb.MultiSearch = (searchValue) => {
     return axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&language=${language}&query=${searchValue}&include_adult=true`)
     .then((response) => {
-        console.log(response.data);
+        console.log("MultiSearch Response:");
+        console.log(response);
+
+        return response.data;
     })
     .catch(err => {
         console.log(err);
