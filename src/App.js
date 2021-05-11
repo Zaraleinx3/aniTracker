@@ -11,7 +11,8 @@ import {
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Search from './components/Search';
-
+import MovieModal from './components/modals/MovieInfoModal';
+import SeriesModal from './components/modals/SeriesInfoModal';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,6 +31,8 @@ function App() {
           </span>
         } />
       </BrowserRouter>
+      <MovieModal />
+      <SeriesModal />
     </ThemeProvider>
   );
 }

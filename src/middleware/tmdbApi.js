@@ -15,9 +15,6 @@ var Tmdb = {};
 Tmdb.MultiSearch = (searchValue) => {
     return axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&language=${language}&query=${searchValue}&include_adult=true`)
     .then((response) => {
-        console.log("MultiSearch Response:");
-        console.log(response);
-
         return response.data;
     })
     .catch(err => {
@@ -30,7 +27,7 @@ Tmdb.MultiSearch = (searchValue) => {
 Tmdb.GetMovieWatchProvider = (movieId) => {
     return axios.get(`https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${TMDB_KEY}`)
     .then((response) => {
-        console.log(response.data);
+        return response.data;
     })
     .catch(err => {
         console.log(err);
@@ -42,7 +39,7 @@ Tmdb.GetMovieWatchProvider = (movieId) => {
 Tmdb.GetSeriesWatchProvider = (tvId) => {
     return axios.get(`https://api.themoviedb.org/3/tv/${[tvId]}/watch/providers?api_key=${TMDB_KEY}`)
     .then((response) => {
-        console.log(response.data);
+        return response.data;
     })
     .catch(err => {
         console.log(err);
@@ -54,7 +51,7 @@ Tmdb.GetSeriesWatchProvider = (tvId) => {
 Tmdb.GetEpisodesAndSeasons = (tvId) => {
     return axios.get(`https://api.themoviedb.org/3/tv/${tvId}?api_key=${TMDB_KEY}&language=${language}`)
     .then((response) => {
-        console.log(response.data);
+        return response.data
     })
     .catch(err => {
         console.log(err);

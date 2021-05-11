@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Search(props) {
     const classes = useStyles();
-    const url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
 
     function keyPress(e){
         if(e.keyCode === 13){
@@ -103,19 +102,15 @@ function Search(props) {
                     <Typography className={classes.heading}>Serien</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
                     <div className={classes.root}>
                         { !props.result.series ? '' : props.result.series.map((series) => (
                             <BaseMovieCard  
-                            item={{
-                                title: series.name,
-                                cover: url + series.poster_path,
-                            }}
+                                item={ series }
+                                key={ series.id}
                             buttons={<SearchButtonSet />}
                             />
                         ))}
                     </div>
-                    </Typography>
                 </AccordionDetails>
             </Accordion>
             <Accordion 
@@ -131,12 +126,10 @@ function Search(props) {
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className={classes.root}>
-                        { !props.result.movies ? '' : props.result.movies.map((movies) => (
+                        { !props.result.movies ? '' : props.result.movies.map((movie) => (
                             <BaseMovieCard  
-                            item={{
-                                title: movies.title,
-                                cover: url + movies.poster_path,
-                            }}
+                                item={ movie }
+                                key={movie.id}
                             buttons={<SearchButtonSet />}
                             />
                         ))}
