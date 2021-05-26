@@ -181,8 +181,8 @@ export default function MiniDrawer(props) {
         <List>
           {
             providerList().map((item, key) => (
-              <a href={item.link} target="_blank" rel="noopener noreferrer" className={classes.providerText}>
-                <ListItem button key={key} href={item.link} target="_blank" rel="noopener noreferrer">
+              <a href={item.link} key={key} target="_blank" rel="noopener noreferrer" className={classes.providerText}>
+                <ListItem button href={item.link} target="_blank" rel="noopener noreferrer">
                   <ListItemIcon>
                       <img src={item.icon} alt={item.alt} className={classes.providerImage} />
                     </ListItemIcon>

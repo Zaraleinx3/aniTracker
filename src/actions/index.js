@@ -18,7 +18,6 @@ export const movieModalIsLoaded = (result) => ({
 })
 
 export const openMovieModal = (clickedMovie) => (dispatch) => {
-    console.log(clickedMovie);
     if(clickedMovie){
         dispatch(movieModalOpen());
         tmdbApi.GetMovieWatchProvider(clickedMovie.id)
@@ -52,7 +51,6 @@ export const seriesModalIsLoaded = (result) => ({
 })
 
 export const openSeriesModal = (clickedSeries) => (dispatch) => {
-    console.log(clickedSeries);
     if(clickedSeries){
         dispatch(seriesModalOpen());
         tmdbApi.GetSeriesWatchProvider(clickedSeries.id)

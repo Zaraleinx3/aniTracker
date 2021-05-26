@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 import { openMovieModal, openSeriesModal } from '../../actions';
+import { seriesModal } from '../../reducers/seriesModal';
 
 const useStyles = makeStyles({
   root: {

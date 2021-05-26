@@ -88,7 +88,7 @@ function MovieInfoModal(props) {
                     <Typography className={classes.bottomSpacing}>{overview}</Typography>
                     <Rating name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
                     { flatrate ? flatrate.map(provider => (
-                        <Tooltip title={provider.provider_name}>
+                        <Tooltip key={provider.provider_id} title={provider.provider_name}>
                           <img
                             src={url + provider.logo_path}
                             alt={provider.provider_name}

@@ -152,14 +152,16 @@ function SeriesInfoModal(props) {
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item xs>
                     <Typography variant="h5" paragraph>{name}</Typography>    
-                    <Typography paragraph className={classes.description}>{overview}</Typography>
+                    <Typography paragraph className={classes.description}>
+                      { overview === "" ? 'Keine Beschreibung vorhanden.' : overview}
+                    </Typography>
                       { genres ? genres.map(genre => (
                         <Chip key={genre.id} label={genre.name} className={classes.chip} />
                       )): ''}
                       <br />
                     <Rating name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
                     { flatrate ? flatrate.map(provider => (
-                        <Tooltip title={provider.provider_name}>
+                        <Tooltip key={provider.provider_id} title={provider.provider_name}>
                           <img
                             src={url + provider.logo_path}
                             alt={provider.provider_name}
@@ -194,20 +196,20 @@ function SeriesInfoModal(props) {
                   </AccordionSummaryStyle>
                   <AccordionDetails>
                     <div className={classes.fullWidth}>
-                      { season.episode_count ? [...Array(season.episode_count)].map((e,i) => (
-                          <List className={classes.list}>
-                            <ListItem key={i} dense button>
-                                <Checkbox
-                                  edge="start"
-                                  //checked={checked.indexOf(i) !== -1}
-                                  tabIndex={-1}
-                                  disableRipple
-                                  inputProps={{ 'aria-labelledby': i }}
-                                />
-                              <ListItemText id={i} primary={`Folge ${i + 1}`} />
-                            </ListItem>
-                          </List>
-                      )): ''}
+                      <List className={classes.list}>
+                        { season.episode_count ? [...Array(season.episode_count)].map((e,i) => (
+                          <ListItem key={i} dense button>
+                              <Checkbox
+                                edge="start"
+                                //checked={checked.indexOf(i) !== -1}
+                                tabIndex={-1}
+                                disableRipple
+                                inputProps={{ 'aria-labelledby': i }}
+                              />
+                            <ListItemText id={i} primary={`Folge ${i + 1}`} />
+                          </ListItem>
+                        )): ''}
+                      </List>
                     </div>
                   </AccordionDetails>
                 </Accordion>
