@@ -22,6 +22,7 @@ import Icon from '@material-ui/core/Icon';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 import navItems from '../mocks/api/navItems';
+import providerList from '../mocks/api/providerList';
 
 const drawerWidth = 240;
 
@@ -95,6 +96,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  providerImage: {
+    width: '25px',
+  },
+  providerText: {
+    textDecoration: 'none',
+    color: '#fff',
+  },
 }));
 
 export default function MiniDrawer(props) {
@@ -160,16 +168,30 @@ export default function MiniDrawer(props) {
         </div>
         <Divider />
         <List>
-            {
-              navItems().map((item, key) => (
-                <ListItem button key={key} component={Link} to={item.route}>
-                   <ListItemIcon><Icon>{item.icon}</Icon></ListItemIcon>
-                  <ListItemText primary={item.description} />
-                </ListItem>
-              ))
-            }
+          {
+            navItems().map((item, key) => (
+              <ListItem button key={key} component={Link} to={item.route}>
+                  <ListItemIcon><Icon>{item.icon}</Icon></ListItemIcon>
+                <ListItemText primary={item.description} />
+              </ListItem>
+            ))
+          }
         </List>
         <Divider />
+        <List>
+          {
+            providerList().map((item, key) => (
+              <a href={item.link} key={key} target="_blank" rel="noopener noreferrer" className={classes.providerText}>
+                <ListItem button href={item.link} target="_blank" rel="noopener noreferrer">
+                  <ListItemIcon>
+                      <img src={item.icon} alt={item.alt} className={classes.providerImage} />
+                    </ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItem>
+              </a>
+            ))
+          }
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

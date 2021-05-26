@@ -1,5 +1,84 @@
-import * as types from "./actionTypes";
-import tmdbApi from "../middleware/tmdbApi";
+import * as types from './actionTypes';
+import tmdbApi from '../middleware/tmdbApi';
+import objectMapper from 'object-mapper';
+
+// **************************** Movie Modal Actions ***********************
+
+export const movieModalOpen = () => ({
+    type: types.MOVIE_MODAL_OPEN,
+})
+
+export const movieModalClose = () => ({
+    type: types.MOVIE_MODAL_CLOSE,
+})
+
+export const movieModalIsLoaded = (result) => ({
+    type: types.MOVIE_MODAL_IS_LOADED,
+    result,
+})
+
+export const openMovieModal = (clickedMovie) => (dispatch) => {
+    if(clickedMovie){
+        dispatch(movieModalOpen());
+        tmdbApi.GetMovieWatchProvider(clickedMovie.id)
+        .then(data => {
+            const flatrate = data.results.DE ? data.results.DE.flatrate : [];
+            const result = {
+                ...clickedMovie, 
+                flatrate: flatrate ? flatrate : [],
+            }
+            dispatch(movieModalIsLoaded(result))
+        })
+    } else {
+        console.log('clickedMovie is empty')
+        //TODO: Toast
+    }
+}
+
+// **************************** Series Modal Actions ***********************
+
+export const seriesModalOpen = () => ({
+    type: types.SERIES_MODAL_OPEN,
+})
+
+export const seriesModalClose = () => ({
+    type: types.SERIES_MODAL_CLOSE,
+})
+
+export const seriesModalIsLoaded = (result) => ({
+    type: types.SERIES_MODAL_IS_LOADED,
+    result,
+})
+
+export const openSeriesModal = (clickedSeries) => (dispatch) => {
+    if(clickedSeries){
+        dispatch(seriesModalOpen());
+        tmdbApi.GetSeriesWatchProvider(clickedSeries.id)
+        .then(data => {
+            const flatrate = data.results.DE ? data.results.DE.flatrate : [];
+            const result = {
+                ...clickedSeries, 
+                flatrate: flatrate ? flatrate : [],
+            }
+            tmdbApi.GetEpisodesAndSeasons(clickedSeries.id)
+            .then(details => {
+                const detailsResult = { 
+                    ...result, 
+                    genres: details.genres,
+                    numberOfSeasons: details.number_of_seasons,
+                    numberOfEpisodes: details.number_of_episodes,
+                    seasons: details.seasons,
+                }
+                dispatch(seriesModalIsLoaded(detailsResult));
+            })                
+        })
+    } else {
+        console.log('clickedSerie is empty')
+        //TODO: Toast
+    }
+}
+
+// **************************** Search Actions ****************************
 
 export const searchIsLoading = () => ({
     type: types.SEARCH_IS_LOADING,
