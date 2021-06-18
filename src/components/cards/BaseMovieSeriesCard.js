@@ -6,8 +6,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
-import { openMovieModal, openSeriesModal } from '../../actions';
+import { openMovieModal, openSeriesModal, saveMovie } from '../../actions';
 import { seriesModal } from '../../reducers/seriesModal';
+import { default as SearchButtonSet } from '../cards/buttonSets/Search';
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-function BaseMovieCard(props) {
+function BaseMovieSeriesCard(props) {  
   const classes = useStyles();
   const url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2";
   
@@ -35,6 +36,25 @@ function BaseMovieCard(props) {
     }
   }
 
+  const renderButtonSet = () => {
+    switch(props.buttons){
+      case 'search': return <SearchButtonSet saveItem={saveItem}/>
+      case 'list': return ''
+      default: return ''
+    }
+  }
+
+  const saveItem = (list) => {
+    var lists = [list];
+    props.item.lists = list
+
+    if (media_type === "tv") {
+        //TODO: saveSeries
+    } else {
+        props.saveMovie(props.item);
+    }
+  }
+
   return (
     <Card className={`${classes.root} ${props.className}`}>
           <CardActionArea onClick={() => openModal(props)}>
@@ -45,8 +65,8 @@ function BaseMovieCard(props) {
                   image={image}
                   title={cardTitle}
               />
-          </CardActionArea>
-        { props.buttons }
+          </CardActionArea> 
+          { renderButtonSet() }
     </Card>
   );
 }
@@ -57,9 +77,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   openMovieModal: (movie) => dispatch(openMovieModal(movie)),
   openSeriesModal: (series) => dispatch(openSeriesModal(series)),
+  saveMovie: (movie) => dispatch(saveMovie(movie)),
 })
 
 export default connect(
   mapStateToProps, 
   mapDispatchToProps
-)(BaseMovieCard);
+)(BaseMovieSeriesCard);

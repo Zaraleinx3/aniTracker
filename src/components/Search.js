@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 
-import BaseMovieCard from './cards/BaseMovieCard';
+import BaseMovieSeriesCard from './cards/BaseMovieSeriesCard';
 import { default as SearchButtonSet } from './cards/buttonSets/Search';
 import { multiSearchMovieDB } from '../actions';
 
@@ -103,7 +103,7 @@ function Search(props) {
                 <AccordionDetails>
                     <div className={classes.root}>
                         { !props.result.series ? '' : props.result.series.map((series) => (
-                            <BaseMovieCard  
+                            <BaseMovieSeriesCard  
                                 item={ series }
                                 key={ series.id}
                             buttons={<SearchButtonSet />}
@@ -126,10 +126,10 @@ function Search(props) {
                 <AccordionDetails>
                     <div className={classes.root}>
                         { !props.result.movies ? '' : props.result.movies.map((movie) => (
-                            <BaseMovieCard  
+                            <BaseMovieSeriesCard  
                                 item={ movie }
                                 key={movie.id}
-                            buttons={<SearchButtonSet />}
+                            buttons={"search"}
                             />
                         ))}
                     </div>
