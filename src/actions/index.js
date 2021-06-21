@@ -1,21 +1,23 @@
 import * as types from './actionTypes';
 import tmdbApi from '../middleware/tmdbApi';
-import objectMapper from 'object-mapper';
+import aniTrackerApi from '../middleware/aniTrackerApi';
+import * as aniTrackerMapper from '../mapper/aniTrackerMapper';
+// import objectMapper from 'object-mapper';
 
 // **************************** Movie Modal Actions ***********************
 
 export const movieModalOpen = () => ({
     type: types.MOVIE_MODAL_OPEN,
-})
+});
 
 export const movieModalClose = () => ({
     type: types.MOVIE_MODAL_CLOSE,
-})
+});
 
 export const movieModalIsLoaded = (result) => ({
     type: types.MOVIE_MODAL_IS_LOADED,
     result,
-})
+});
 
 export const openMovieModal = (clickedMovie) => (dispatch) => {
     if(clickedMovie){
@@ -39,16 +41,16 @@ export const openMovieModal = (clickedMovie) => (dispatch) => {
 
 export const seriesModalOpen = () => ({
     type: types.SERIES_MODAL_OPEN,
-})
+});
 
 export const seriesModalClose = () => ({
     type: types.SERIES_MODAL_CLOSE,
-})
+});
 
 export const seriesModalIsLoaded = (result) => ({
     type: types.SERIES_MODAL_IS_LOADED,
     result,
-})
+});
 
 export const openSeriesModal = (clickedSeries) => (dispatch) => {
     if(clickedSeries){
@@ -105,6 +107,29 @@ export const multiSearchMovieDB = (searchValue) => (dispatch) => {
         console.log('SearchValue is empty')
         //TODO: Toast
     }
+}
 
-   
+// **************************** AniTracker Actions ****************************
+
+export const movieIsSaving = () => ({
+    type: types.MOVIE_IS_SAVING,
+});
+
+export const movieIsSaved = () => ({
+    type: types.MOVIE_IS_SAVED,
+});
+
+export const saveMovie = (movie) => (dispatch) => {
+    if(movie){
+        dispatch(movieIsSaving());
+        const mappedMovie = aniTrackerMapper.saveMovieToAniTrackerMovie(movie);
+        aniTrackerApi.SaveMovie(mappedMovie)
+        .then(data => {
+            console.log(data)
+            dispatch(movieIsSaved(data));
+        })    
+    } else {
+        console.log('Movie is empty')
+        //TODO: Toast
+    }
 }

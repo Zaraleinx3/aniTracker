@@ -12,14 +12,14 @@ export default function Search(props) {
             <Grid container>
                 <Grid item xs={4}>
                     <Tooltip title="Auf Todo setzen">
-                        <IconButton aria-label="todo" onClick={() => {console.log("todo")}}>
+                        <IconButton aria-label="todo" onClick={() => {props.saveItem("todo")}}>
                             <Assignment />
                         </IconButton>
                     </Tooltip>
                 </Grid>
                 <Grid item xs={4}>
                     <Tooltip title="Auf Warten setzen">
-                        <IconButton aria-label="wait" onClick={() => {console.log("wait")}}>
+                        <IconButton aria-label="wait" onClick={() => {props.saveItem("wait")}}>
                             <Pause />
                         </IconButton>
                     </Tooltip>
