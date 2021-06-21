@@ -46,7 +46,7 @@ function BaseMovieSeriesCard(props) {
 
   const saveItem = (list) => {
     var lists = [list];
-    props.item.lists = list
+    props.item.lists = lists
 
     if (media_type === "tv") {
         //TODO: saveSeries

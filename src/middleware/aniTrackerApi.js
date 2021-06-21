@@ -19,11 +19,7 @@ api.GetMovieById = (movieId) => {
 
 // Save Movie
 api.SaveMovie = (movie) => {
-    return axios.post(`${domain}api/Movies`, movie, {
-        headers: {
-            "Access-Control-Allow-Origin": "*"
-        }
-    })
+    return axios.post(`${domain}api/Movies`, movie)
     .then((data) => {
         return data;
     })
