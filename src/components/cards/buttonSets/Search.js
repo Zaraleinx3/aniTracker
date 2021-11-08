@@ -5,7 +5,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import { Assignment, Pause, MoreVert} from '@material-ui/icons';
 
-
 export default function Search(props) {
     return (
         <CardActions>
@@ -19,7 +18,7 @@ export default function Search(props) {
                 </Grid>
                 <Grid item xs={4}>
                     <Tooltip title="Auf Warten setzen">
-                        <IconButton aria-label="wait" onClick={() => {props.saveItem("wait")}}>
+                        <IconButton aria-label="waiting" onClick={() => {props.saveItem("waiting")}}>
                             <Pause />
                         </IconButton>
                     </Tooltip>

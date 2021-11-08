@@ -13,6 +13,7 @@ import Navbar from './components/Navbar';
 import Search from './components/Search';
 import MovieModal from './components/modals/MovieInfoModal';
 import SeriesModal from './components/modals/SeriesInfoModal';
+import movieSeriesList from './components/MovieSeriesList';
 
 const theme = createMuiTheme({
   palette: {
@@ -28,6 +29,7 @@ function App() {
           <span>
             <Route exact path="/" component={Home} />
             <Route exact path="/search" component={Search} />
+            <Route exact path="/list/:listName" component={movieSeriesList} />
           </span>
         } />
       </BrowserRouter>

@@ -13,27 +13,27 @@ export default function navItems() {
         {
             icon: 'play_arrow',
             description: 'Wip',
-            route: '/wip',
+            route: '/list/wip',
         },
         {
             icon: 'assignment',
             description: 'Todo',
-            route: '/todo',
+            route: '/list/todo',
         },
         {
             icon: 'pause',
             description: 'Warten',
-            route: '/waiting',
+            route: '/list/waiting',
         },
         {
             icon: 'done_all',
             description: 'Fertig',
-            route: '/done',
+            route: '/list/done',
         },
         {
             icon: 'delete_forever',
             description: 'Rip',
-            route: '/rip',
+            route: '/list/rip',
         },
     ]
 }
