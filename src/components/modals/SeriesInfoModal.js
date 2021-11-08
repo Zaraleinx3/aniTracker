@@ -1,16 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -22,107 +18,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import { useStyles, AccordionSummaryStyle, DialogContent, DialogActions } from '../../styles/seriesInfoModalStyles';
+
 import { seriesModalClose } from '../../actions';
 import { seriesModal } from '../../reducers/seriesModal';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  cover: {
-    height: '300px',
-  },
-  fullWidth: {
-    width: '100%',
-  },
-  overflowTop: {
-    overflow: 'hidden',
-    height: '22rem',
-    minHeight: '22rem'
-  },
-  description: {
-    height: '33%',
-    overflow: 'auto',
-    paddingRight: '5px',
-    '&::-webkit-scrollbar': {
-        width: '0.3em'
-      },
-      '&::-webkit-scrollbar-track': {
-        boxShadow: 'inset 0 0 6px #303030',
-        webkitBoxShadow: 'inset 0 0 6px #303030',
-        borderRadius: '5px',
-      },
-    '&::-webkit-scrollbar-thumb': {
-        background: '#424242',
-        borderRadius: '5px',
-      }
-  }, 
-  seasonRating: {
-    marginTop: "8px",
-  },
-  chip: {
-    marginRight: '5px',
-    marginBottom: '16px',
-  },
-  providerLogo: {
-    height: "40px",
-    float: "right",
-    marginLeft: "5px",
-    borderRadius: "4px"
-  },
-  list: {
-    padding: 0,
-    backgroundColor: '#303030',
-
-  },
-  scrollbar: {
-    '&::-webkit-scrollbar': {
-      width: '1em'
-    },
-    '&::-webkit-scrollbar-track': {
-      boxShadow: 'inset 0 0 6px #303030',
-      webkitBoxShadow: 'inset 0 0 6px #303030',
-      borderRadius: '5px',
-    },
-  '&::-webkit-scrollbar-thumb': {
-      background: '#424242',
-      borderRadius: '5px',
-    },
-  }
-}));
-
-const AccordionSummaryStyle = withStyles({
-  root: {
-    backgroundColor: '#303030',
-    expanded: {
-      margin: 0,
-    },
-  },
-  content: {
-    margin: 0,
-  }
-})(AccordionSummary);
-
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
-
-const DialogActions = withStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
 
 function SeriesInfoModal(props) {
   const classes = useStyles();
   
-  const url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2";
-  const { poster_path, name, overview, genres, seasons, flatrate } = props.payload;
-  const cover = url + poster_path;
+  const { poster, title, overview, genres, seasons, flatrate } = props.payload;
 
   return (
     <div>
@@ -143,15 +47,15 @@ function SeriesInfoModal(props) {
           <Grid container spacing={3}>
             <Grid item>
                 <img
-                  src={cover}
-                  alt={name}
+                  src={poster}
+                  alt={title}
                   className={classes.cover}
                 />
               </Grid>
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item xs>
-                    <Typography variant="h5" paragraph>{name}</Typography>    
+                    <Typography variant="h5" paragraph>{title}</Typography>    
                     <Typography paragraph className={classes.description}>
                       { overview === "" ? 'Keine Beschreibung vorhanden.' : overview}
                     </Typography>
@@ -163,7 +67,7 @@ function SeriesInfoModal(props) {
                     { flatrate ? flatrate.map(provider => (
                         <Tooltip key={provider.provider_id} title={provider.provider_name}>
                           <img
-                            src={url + provider.logo_path}
+                            src={provider.logo_path}
                             alt={provider.provider_name}
                             className={classes.providerLogo}
                           />

@@ -1,10 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
@@ -12,50 +9,15 @@ import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import { useStyles, DialogContent, DialogActions } from '../../styles/movieInfoModalStyles';
+
 import { movieModalClose } from '../../actions';
 import { movieModal } from '../../reducers/movieModal';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  cover: {
-    height: "300px",
-  },
-  providerLogo: {
-    height: "40px",
-    float: "right",
-    marginLeft: "5px",
-    borderRadius: "4px"
-  },
-  bottomSpacing: {
-    marginBottom: "10px",
-  },
-  fullWidth: {
-    width: "100%",
-  },
-}));
-
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
-
-const DialogActions = withStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
 
 function MovieInfoModal(props) {
   const classes = useStyles();
 
-  const url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2";
-  const { poster_path, title, overview, flatrate } = props.payload;
-  const cover = url + poster_path;
+  const { poster, title, overview, flatrate } = props.payload;
 
   return (
     <div>
@@ -76,7 +38,7 @@ function MovieInfoModal(props) {
           <Grid container spacing={3}>
             <Grid item>
                 <img
-                  src={cover}
+                  src={poster}
                   alt={title}
                   className={classes.cover}
                 />
@@ -90,7 +52,7 @@ function MovieInfoModal(props) {
                     { flatrate ? flatrate.map(provider => (
                         <Tooltip key={provider.provider_id} title={provider.provider_name}>
                           <img
-                            src={url + provider.logo_path}
+                            src={provider.logo_path}
                             alt={provider.provider_name}
                             className={classes.providerLogo}
                           />
@@ -101,17 +63,6 @@ function MovieInfoModal(props) {
               </Grid>
           </Grid>
         </DialogContent>
-
-
-
-
-        
-
-
-
-
-
-
         <DialogActions>
           <Button autoFocus onClick={() => console.log("Save")} color="primary">
             Save

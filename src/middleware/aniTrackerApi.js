@@ -63,9 +63,9 @@ api.SaveSeries = (series) => {
 
 // Delete Series
 
-// GetAllByTag = list
+// GetAllByTag
 api.GetAllbyTag = (tag) => {
-    return axios.get(`${domain}/api/Movies/${tag}`) // TODO: change "/api/Movies" with the new Controller
+    return axios.get(`${domain}api/Movies/${tag}`)
     .then((data) => {
         console.log('data:', data);
     })
@@ -75,5 +75,17 @@ api.GetAllbyTag = (tag) => {
     })
 }
 
+// GetAllByList
+api.GetAllbyList = (list) => {
+    return axios.get(`${domain}api/Movies/${list}`) // TODO: change "/api/Movies" with the new Controller
+    .then((data) => {
+        console.log('data:', data);
+        return data;
+    })
+    .catch(err => {
+        console.log(err);
+        throw(err);
+    })
+}
 
 export default api;

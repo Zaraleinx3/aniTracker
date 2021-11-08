@@ -1,8 +1,8 @@
 import * as types from './actionTypes';
 import tmdbApi from '../middleware/tmdbApi';
 import aniTrackerApi from '../middleware/aniTrackerApi';
-import * as aniTrackerMapper from '../mapper/aniTrackerMapper';
-// import objectMapper from 'object-mapper';
+import * as FEToBEMapper from '../mapper/FEToBEMapper';
+import * as tmdbToFeMapper from '../mapper/TmdbToFEMapper';
 
 // **************************** Movie Modal Actions ***********************
 
@@ -22,7 +22,7 @@ export const movieModalIsLoaded = (result) => ({
 export const openMovieModal = (clickedMovie) => (dispatch) => {
     if(clickedMovie){
         dispatch(movieModalOpen());
-        tmdbApi.GetMovieWatchProvider(clickedMovie.id)
+        tmdbApi.GetMovieWatchProvider(clickedMovie.tmdbId)
         .then(data => {
             const flatrate = data.results.DE ? data.results.DE.flatrate : [];
             const result = {
@@ -55,14 +55,14 @@ export const seriesModalIsLoaded = (result) => ({
 export const openSeriesModal = (clickedSeries) => (dispatch) => {
     if(clickedSeries){
         dispatch(seriesModalOpen());
-        tmdbApi.GetSeriesWatchProvider(clickedSeries.id)
+        tmdbApi.GetSeriesWatchProvider(clickedSeries.tmdbId)
         .then(data => {
             const flatrate = data.results.DE ? data.results.DE.flatrate : [];
             const result = {
                 ...clickedSeries, 
                 flatrate: flatrate ? flatrate : [],
             }
-            tmdbApi.GetEpisodesAndSeasons(clickedSeries.id)
+            tmdbApi.GetEpisodesAndSeasons(clickedSeries.tmdbId)
             .then(details => {
                 const detailsResult = { 
                     ...result, 
@@ -97,8 +97,8 @@ export const multiSearchMovieDB = (searchValue) => (dispatch) => {
         tmdbApi.MultiSearch(searchValue)
         .then(data => {
             const result = { 
-                movies: data.results.filter(item => item.media_type === 'movie'),
-                series: data.results.filter(item => item.media_type === 'tv')
+                movies: tmdbToFeMapper.multiSearchMoviesMapper(data.results.filter(item => item.media_type === 'movie')),
+                series: tmdbToFeMapper.multiSearchSeriesMapper(data.results.filter(item => item.media_type === 'tv')),
             }
 
             dispatch(searchIsLoaded(result));
@@ -122,14 +122,37 @@ export const movieIsSaved = () => ({
 export const saveMovie = (movie) => (dispatch) => {
     if(movie){
         dispatch(movieIsSaving());
-        const mappedMovie = aniTrackerMapper.saveMovieToAniTrackerMovie(movie);
+        const mappedMovie = FEToBEMapper.saveMovieToAniTrackerMovie(movie);
         aniTrackerApi.SaveMovie(mappedMovie)
         .then(data => {
-            console.log(data)
+            console.log(data);
             dispatch(movieIsSaved(data));
         })    
     } else {
         console.log('Movie is empty')
+        //TODO: Toast
+    }
+}
+
+export const listIsLoading = () => ({
+    type: types.LIST_IS_LOADING,
+});
+
+export const listIsLoaded = (list) => ({
+    type: types.LIST_IS_LOADED,
+    payload: list,
+});
+
+export const getList = (list) => (dispatch) => {
+    if(list) {
+        dispatch(listIsLoading());
+        aniTrackerApi.GetAllbyList(list) 
+        .then(data => {
+            console.log(data);
+            dispatch(listIsLoaded(data));
+        })
+    } else {
+        console.log('List is empty')
         //TODO: Toast
     }
 }
