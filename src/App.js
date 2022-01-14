@@ -8,6 +8,9 @@ import {
   createMuiTheme
 } from "@material-ui/core";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Search from './components/Search';
@@ -35,6 +38,19 @@ function App() {
       </BrowserRouter>
       <MovieModal />
       <SeriesModal />
+
+      <ToastContainer
+        theme= "dark"
+        position="bottom-right"
+        autoClose={7000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </ThemeProvider>
   );
 }

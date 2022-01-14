@@ -67,7 +67,7 @@ function SeriesInfoModal(props) {
                     { flatrate ? flatrate.map(provider => (
                         <Tooltip key={provider.provider_id} title={provider.provider_name}>
                           <img
-                            src={provider.logo_path}
+                            src={"https://www.themoviedb.org/t/p/original" + provider.logo_path}
                             alt={provider.provider_name}
                             className={classes.providerLogo}
                           />

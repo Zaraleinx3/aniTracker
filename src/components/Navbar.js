@@ -64,7 +64,7 @@ export default function Navbar(props) {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Vaultgamer
+            AniTracker
           </Typography>
         </Toolbar>
       </AppBar>

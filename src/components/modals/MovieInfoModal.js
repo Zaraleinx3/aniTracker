@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import { FormControl, FormHelperText, Select, MenuItem } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
@@ -9,15 +10,33 @@ import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { useStyles, DialogContent, DialogActions } from '../../styles/movieInfoModalStyles';
+import { useStyles, DialogContent, DialogActions, CustomButton } from '../../styles/movieInfoModalStyles';
+import * as toast from '../../helper/toast';
 
-import { movieModalClose } from '../../actions';
+import { movieModalClose, saveMovie } from '../../actions';
 import { movieModal } from '../../reducers/movieModal';
 
 function MovieInfoModal(props) {
   const classes = useStyles();
 
   const { poster, title, overview, flatrate } = props.payload;
+
+  let list = '';
+  const handleChange = (event) => {
+    list = event.target.value;
+    //TODO: update Select to state
+  };
+
+  const handleAdd = (event) => {
+    if (list === '') {
+      toast.error('Es wurde keine Liste ausgewählt.');
+    } else {
+      let movieWithList = props.payload;
+      movieWithList.lists = [list];
+      props.saveMovie(movieWithList);
+    }
+
+  }
 
   return (
     <div>
@@ -52,7 +71,7 @@ function MovieInfoModal(props) {
                     { flatrate ? flatrate.map(provider => (
                         <Tooltip key={provider.provider_id} title={provider.provider_name}>
                           <img
-                            src={provider.logo_path}
+                            src={"https://www.themoviedb.org/t/p/original" + provider.logo_path}
                             alt={provider.provider_name}
                             className={classes.providerLogo}
                           />
@@ -64,12 +83,39 @@ function MovieInfoModal(props) {
           </Grid>
         </DialogContent>
         <DialogActions>
+
+        <FormControl sx={{ m: 1, minWidth: 80 }}>
+          <FormHelperText>Hinzufügen zu ...</FormHelperText>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={list}
+            label="Hinzufügen"
+            onChange= {handleChange}
+          >
+            <MenuItem value={""}>-</MenuItem>
+            <MenuItem value={"wip"}>Wip</MenuItem>
+            <MenuItem value={"todo"}>Todo</MenuItem>
+            <MenuItem value={"waiting"}>Warten</MenuItem>
+            <MenuItem value={"done"}>Fertig</MenuItem>
+            <MenuItem value={"rip"}>Rip</MenuItem>
+          </Select>
+        </FormControl>
+
+        <CustomButton variant="outlined" onClick={handleAdd}>
+            Hinzufügen
+        </CustomButton>
+
+          {/*
           <Button autoFocus onClick={() => console.log("Save")} color="primary">
-            Save
+            Save ...
           </Button>
-          <Button autoFocus onClick={props.closeModal} color="primary">
-            Close
-          </Button>
+          */}
+
+
+          <CustomButton variant="outlined" autoFocus onClick={props.closeModal}>
+            X
+          </CustomButton>
         </DialogActions>
       </Dialog>
     </div>
@@ -83,7 +129,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    closeModal: () => dispatch(movieModalClose())
+    closeModal: () => dispatch(movieModalClose()),
+    saveMovie: (movie) => dispatch(saveMovie(movie))
 })
 
 export default connect(

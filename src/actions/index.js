@@ -4,6 +4,8 @@ import aniTrackerApi from '../middleware/aniTrackerApi';
 import * as FEToBEMapper from '../mapper/FEToBEMapper';
 import * as tmdbToFeMapper from '../mapper/TmdbToFEMapper';
 
+import * as toast from '../helper/toast';
+
 // **************************** Movie Modal Actions ***********************
 
 export const movieModalOpen = () => ({
@@ -122,15 +124,26 @@ export const movieIsSaved = () => ({
 export const saveMovie = (movie) => (dispatch) => {
     if(movie){
         dispatch(movieIsSaving());
-        const mappedMovie = FEToBEMapper.saveMovieToAniTrackerMovie(movie);
+        const mappedMovie = FEToBEMapper.mapTmdbMovieToAniTrackerAPI(movie);
         aniTrackerApi.SaveMovie(mappedMovie)
         .then(data => {
-            console.log(data);
+            let list = movie.lists.at(-1);
+            let message = `${movie.title} wurde erfolgreich auf ${list} gesetzt.`;
+            toast.success(message);
             dispatch(movieIsSaved(data));
+        })
+        .catch(err => {
+            switch(err.response.status) {
+                case 409:
+                    toast.warn(`${movie.title} existiert bereits.`); 
+                    break;
+                default:  
+                    toast.error('Beim speichern ist ein Fehler aufgetreten.');
+            }
         })    
     } else {
-        console.log('Movie is empty')
-        //TODO: Toast
+        let message = 'Es wurde kein Film ausgewählt.';
+        toast.error(message);
     }
 }
 

@@ -1,6 +1,7 @@
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
+import MuiButton from '@material-ui/core/Button';
 
 export const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,4 +37,10 @@ export const DialogActions = withStyles((theme) => ({
       padding: theme.spacing(1),
     },
 }))(MuiDialogActions);
+
+export const CustomButton = withStyles((theme) => ({
+  root: {
+    minWidth: "40px",
+  }
+}))(MuiButton);
 

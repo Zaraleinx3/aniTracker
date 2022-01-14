@@ -19,12 +19,12 @@ api.GetMovieById = (movieId) => {
 
 // Save Movie
 api.SaveMovie = (movie) => {
-    return axios.post(`${domain}api/Movies`, movie)
+    return axios.post(`${domain}api/Movie`, movie)
     .then((data) => {
         return data;
     })
     .catch(err => {
-        console.log(err);
+        //console.log(err);
         throw(err);
     })
 }
@@ -77,7 +77,7 @@ api.GetAllbyTag = (tag) => {
 
 // GetAllByList
 api.GetAllbyList = (list) => {
-    return axios.get(`${domain}api/Movies/${list}`) // TODO: change "/api/Movies" with the new Controller
+    return axios.get(`${domain}api/Media/list/${list}`) // TODO: change "/api/Movies" with the new Controller
     .then((data) => {
         console.log('data:', data);
         return data;
