@@ -96,18 +96,20 @@ export const searchIsLoaded = (result) => ({
 export const multiSearchMovieDB = (searchValue) => (dispatch) => {
     if(searchValue){
         dispatch(searchIsLoading());
+
         tmdbApi.MultiSearch(searchValue)
         .then(data => {
-            const result = { 
-                movies: tmdbToFeMapper.multiSearchMoviesMapper(data.results.filter(item => item.media_type === 'movie')),
-                series: tmdbToFeMapper.multiSearchSeriesMapper(data.results.filter(item => item.media_type === 'tv')),
+            const result = {
+                movies: tmdbToFeMapper.multiSearchMoviesMapper(data.movies.results),
+                series: tmdbToFeMapper.multiSearchSeriesMapper(data.series.results)
             }
-
             dispatch(searchIsLoaded(result));
-        })    
+        })
+        .catch(err => {
+            toast.error(err);
+        }) 
     } else {
-        console.log('SearchValue is empty')
-        //TODO: Toast
+        toast.warn("Bitte gib einen Suchbegriff ein.");
     }
 }
 

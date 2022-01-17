@@ -1,7 +1,6 @@
 var map = {
     "title": "name",
     "tmdbId": "id",
-    "mediaType": "media_type",
     "cover": {
        "key": "poster_path",
        transform: function (poster_path){
