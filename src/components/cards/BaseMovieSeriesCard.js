@@ -15,10 +15,10 @@ function BaseMovieSeriesCard(props) {
   const classes = useStyles();
   const url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2";
   
-  const {poster, title, mediaType} = props.item;
+  const {poster, title, type} = props.item;
 
   const openModal = (props) => {
-    if(props.item.mediaType === 'tv'){
+    if(props.item.type === 'Series'){
       props.openSeriesModal(props.item)
     }
     else {
@@ -38,7 +38,7 @@ function BaseMovieSeriesCard(props) {
     var lists = [list];
     props.item.lists = lists
 
-    if (mediaType === "tv") {
+    if (type === "Series") {
         //TODO: saveSeries
     } else {
         props.saveMovie(props.item);
