@@ -49,6 +49,20 @@ Tmdb.MoviesSearch = (searchValue) => {
     })
 }
 
+Tmdb.GetSeriesInfo = (tmdbId) => axios.all([Tmdb.GetSeriesWatchProvider(tmdbId), Tmdb.GetEpisodesAndSeasons(tmdbId)])
+    .then(
+        axios.spread((...responses) => {
+            return {
+                provider : responses[0],
+                episodesAndSeasons : responses[1]
+            }
+        })
+    )
+    .catch(err =>{
+        throw(err);
+    }
+)
+
 // Search for Movie Providers like Amazon, Netflix and logos
 Tmdb.GetMovieWatchProvider = (movieId) => {
     return axios.get(`https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${TMDB_KEY}`)
@@ -74,9 +88,12 @@ Tmdb.SeriesSearch = (searchValue) => {
     })
 }
 
+
+
+
 // Search for Series Providers like Amazon, Netflix and logos
 Tmdb.GetSeriesWatchProvider = (tvId) => {
-    return axios.get(`https://api.themoviedb.org/3/tv/${[tvId]}/watch/providers?api_key=${TMDB_KEY}`)
+    return axios.get(`https://api.themoviedb.org/3/tv/${tvId}/watch/providers?api_key=${TMDB_KEY}`)
     .then((response) => {
         return response.data;
     })

@@ -8,13 +8,16 @@ export function multiSearchMoviesMapper(movies) {
         "poster_path": {
             key: "poster",
             transform: function (poster) { 
-              return posterBase + poster;
+              if (poster){
+                return posterBase + poster;
+              } else {
+                return "/no_image.jpg"
+              }    
             }
           },
         "overview": "overview",
         "release_date": "release", // TODO: Eventuell anpassen an API
         "id": "tmdbId",
-        "media_type": "mediaType",
         "title": "title",
     }
 
@@ -32,12 +35,15 @@ export function multiSearchSeriesMapper(series) {
         "poster_path": {
             key: "poster",
             transform: function (poster) { 
-              return posterBase + poster;
+              if (poster){
+                return posterBase + poster;
+              } else {
+                return "/no_image.jpg"
+              }    
             }
           },
       "id": "tmdbId",
       "overview": "overview",
-      "media_type": "mediaType",
       "name": "title",
     }
 

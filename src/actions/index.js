@@ -57,24 +57,18 @@ export const seriesModalIsLoaded = (result) => ({
 export const openSeriesModal = (clickedSeries) => (dispatch) => {
     if(clickedSeries){
         dispatch(seriesModalOpen());
-        tmdbApi.GetSeriesWatchProvider(clickedSeries.tmdbId)
+        tmdbApi.GetSeriesInfo(clickedSeries.tmdbId)
         .then(data => {
-            const flatrate = data.results.DE ? data.results.DE.flatrate : [];
+            const flatrate = data.provider.DE ? data.provider.DE.flatrate : [];
             const result = {
                 ...clickedSeries, 
                 flatrate: flatrate ? flatrate : [],
+                genres: data.episodesAndSeasons.genres,
+                numberOfSeasons: data.episodesAndSeasons.number_of_seasons,
+                numberOfEpisodes: data.episodesAndSeasons.number_of_episodes,
+                seasons: data.episodesAndSeasons.seasons,
             }
-            tmdbApi.GetEpisodesAndSeasons(clickedSeries.tmdbId)
-            .then(details => {
-                const detailsResult = { 
-                    ...result, 
-                    genres: details.genres,
-                    numberOfSeasons: details.number_of_seasons,
-                    numberOfEpisodes: details.number_of_episodes,
-                    seasons: details.seasons,
-                }
-                dispatch(seriesModalIsLoaded(detailsResult));
-            })                
+            dispatch(seriesModalIsLoaded(result));              
         })
     } else {
         console.log('clickedSerie is empty')
@@ -103,6 +97,8 @@ export const multiSearchMovieDB = (searchValue) => (dispatch) => {
                 movies: tmdbToFeMapper.multiSearchMoviesMapper(data.movies.results),
                 series: tmdbToFeMapper.multiSearchSeriesMapper(data.series.results)
             }
+            result.movies = result.movies.map(mov => ({ ...mov, type: 'Movie' }))
+            result.series = result.series.map(tv => ({ ...tv, type: 'Series' }))
             dispatch(searchIsLoaded(result));
         })
         .catch(err => {
