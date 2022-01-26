@@ -33,9 +33,11 @@ export const openMovieModal = (clickedMovie) => (dispatch) => {
             }
             dispatch(movieModalIsLoaded(result))
         })
+        .catch(err => {
+            toast.error(err);
+        }) 
     } else {
-        console.log('clickedMovie is empty')
-        //TODO: Toast
+        toast.warn('Es ist keine Film ausgewählt');
     }
 }
 
@@ -70,9 +72,11 @@ export const openSeriesModal = (clickedSeries) => (dispatch) => {
             }
             dispatch(seriesModalIsLoaded(result));              
         })
+        .catch(err => {
+            toast.error(err);
+        }) 
     } else {
-        console.log('clickedSerie is empty')
-        //TODO: Toast
+        toast.warn('Es ist keine Serie auswgewählt');
     }
 }
 
@@ -162,8 +166,8 @@ export const getList = (list) => (dispatch) => {
             console.log(data);
             dispatch(listIsLoaded(data));
         })
-    } else {
-        console.log('List is empty')
-        //TODO: Toast
+        .catch(err => {
+            toast.error(err);
+        }) 
     }
 }

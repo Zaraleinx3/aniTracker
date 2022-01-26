@@ -14,6 +14,17 @@ export const useStyles = makeStyles((theme) => ({
     fullWidth: {
       width: '100%',
     },
+    episode: {
+      display: 'inline-block',
+      width: '8%',
+      border: '2px',
+      borderRadius: '10px',
+      paddingRight: '7px',
+      paddingLeft: '7px',
+      marginRight: '5px',
+      marginBottom: '5px',
+      backgroundColor: '#303030'
+    },
     overflowTop: {
       overflow: 'hidden',
       height: '22rem',
@@ -76,6 +87,9 @@ export const AccordionSummaryStyle = withStyles({
       expanded: {
         margin: 0,
       },
+      content: {
+        margin: 0,
+      }
     },
     content: {
       margin: 0,

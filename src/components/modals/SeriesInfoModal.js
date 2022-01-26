@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Accordion from '@material-ui/core/Accordion';
@@ -21,7 +19,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { useStyles, AccordionSummaryStyle, DialogContent, DialogActions } from '../../styles/seriesInfoModalStyles';
 
 import { seriesModalClose } from '../../actions';
-import { seriesModal } from '../../reducers/seriesModal';
 
 function SeriesInfoModal(props) {
   const classes = useStyles();
@@ -100,20 +97,18 @@ function SeriesInfoModal(props) {
                   </AccordionSummaryStyle>
                   <AccordionDetails>
                     <div className={classes.fullWidth}>
-                      <List className={classes.list}>
                         { season.episode_count ? [...Array(season.episode_count)].map((e,i) => (
-                          <ListItem key={i} dense button>
-                              <Checkbox
+                          <div className={classes.episode} key={i}>
+                            <Checkbox
                                 edge="start"
-                                //checked={checked.indexOf(i) !== -1}
                                 tabIndex={-1}
                                 disableRipple
                                 inputProps={{ 'aria-labelledby': i }}
                               />
-                            <ListItemText id={i} primary={`Folge ${i + 1}`} />
-                          </ListItem>
+                              <span id={i}>{i + 1}</span>
+                          </div>
                         )): ''}
-                      </List>
+
                     </div>
                   </AccordionDetails>
                 </Accordion>
