@@ -32,16 +32,16 @@ export function multiSearchMoviesMapper(movies) {
 export function multiSearchSeriesMapper(series) {
     let mappedSeries = [];
     let mapProfile = {
-        "poster_path": {
-            key: "poster",
-            transform: function (poster) { 
-              if (poster){
-                return posterBase + poster;
-              } else {
-                return "/no_image.jpg"
-              }    
-            }
-          },
+      "poster_path": {
+          key: "poster",
+          transform: function (poster) { 
+            if (poster){
+              return posterBase + poster;
+            } else {
+              return "/no_image.jpg"
+            }    
+          }
+        },
       "id": "tmdbId",
       "overview": "overview",
       "name": "title",

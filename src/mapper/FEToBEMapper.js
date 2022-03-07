@@ -16,17 +16,17 @@ export function mapTmdbMovieToAniTrackerAPI (movie) {
     }
 }
 
-export function mapTmdbSeasonToAniTrackerAPI (series) {
-    const poster = url + series.poster_path;
+export function mapTmdbSeasonToAniTrackerAPI (season) {
+    const poster = url + season.poster_path;
     //TODO: model von API angucken und kopieren
     return {
-        "title": series.name,
+        "tmdbId": season.tmdbId.toString(),
+        "title": season.name,
         "poster": poster,
-        "tmdbId": series.id,
-        "release": series.first_air_date,
-        "numberOfSeasons": series.numberOfSeasons,
-        "numberOfEpisodes": series.numberOfEpisodes,
-        "lists": series.lists,
-        "tags": series.tags,
+        "release": season.first_air_date,
+        "numberOfSeasons": season.numberOfSeasons,
+        "numberOfEpisodes": season.numberOfEpisodes,
+        "lists": season.lists,
+        "tags": season.tags,
     }
 }

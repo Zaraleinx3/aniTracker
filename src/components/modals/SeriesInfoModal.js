@@ -1,29 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Rating from '@material-ui/lab/Rating';
-import Chip from '@material-ui/core/Chip';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Rating from '@mui/material/Rating';
+import Chip from '@mui/material/Chip';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Box from '@mui/material/Box';
+
+import { Assignment, Pause, MoreVert} from '@mui/icons-material';
 
 import { useStyles, AccordionSummaryStyle, DialogContent, DialogActions } from '../../styles/seriesInfoModalStyles';
+import * as toast from '../../helper/toast';
 
-import { seriesModalClose } from '../../actions';
+import { seriesModalClose, saveSeason } from '../../actions';
 
 function SeriesInfoModal(props) {
   const classes = useStyles();
   
   const { poster, title, overview, genres, seasons, flatrate } = props.payload;
+
+  const handleAdd = (event) => {
+    console.log("hier");
+  }
 
   return (
     <div>
@@ -36,7 +46,7 @@ function SeriesInfoModal(props) {
         maxWidth={'md'}
         PaperProps={{
           style: {
-            backgroundColor: "#212326",
+            backgroundColor: "rgb(0 0 0)",
           },
         }}S
       >
@@ -51,7 +61,7 @@ function SeriesInfoModal(props) {
               </Grid>
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
-                  <Grid item xs>
+                  <Grid item xs className={classes.descriptionBlock}>
                     <Typography variant="h5" paragraph>{title}</Typography>    
                     <Typography paragraph className={classes.description}>
                       { overview === "" ? 'Keine Beschreibung vorhanden.' : overview}
@@ -60,6 +70,7 @@ function SeriesInfoModal(props) {
                         <Chip key={genre.id} label={genre.name} className={classes.chip} />
                       )): ''}
                       <br />
+                      { /* TODO: add Rating */ }
                     <Rating name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
                     { flatrate ? flatrate.map(provider => (
                         <Tooltip key={provider.provider_id} title={provider.provider_name}>
@@ -83,8 +94,8 @@ function SeriesInfoModal(props) {
                 <Accordion key={season.season_number}>
                   <AccordionSummaryStyle
                     expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                    aria-controls="season"
+                    id={season.season_number}
                   >
                     <FormControlLabel
                           aria-label="Acknowledge"
@@ -93,7 +104,37 @@ function SeriesInfoModal(props) {
                           control={<Checkbox />}
                           label={`${season.season_number}: ${season.name}`}
                     />
-                    <Rating name="half-rating-read" defaultValue={0} precision={0.5} className={classes.seasonRating} readOnly />
+                   
+                      <Rating name="half-rating-read" defaultValue={0} precision={0.5} className={classes.seasonRating} readOnly />
+                  
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        '& > *': {
+                          m: 1,
+                        },
+                      }}
+                    >
+                      <ButtonGroup variant="text" aria-label="text button group">
+                        <Tooltip title="Auf Todo setzen">
+                          <IconButton aria-label="todo" onClick={() => {props.saveItem("todo")}}>
+                              <Assignment />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Auf Warten setzen">
+                          <IconButton aria-label="waiting" onClick={() => {props.saveItem("waiting")}}>
+                              <Pause />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Optionen">
+                          <IconButton aria-label="options" onClick={() => {console.log("options")}}>
+                              <MoreVert />
+                          </IconButton>
+                        </Tooltip>
+                      </ButtonGroup>
+                    </Box>
                   </AccordionSummaryStyle>
                   <AccordionDetails>
                     <div className={classes.fullWidth}>
@@ -117,11 +158,8 @@ function SeriesInfoModal(props) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={() => console.log("Save")} color="primary">
-            Save
-          </Button>
-          <Button autoFocus onClick={props.closeModal} color="primary">
-            Close
+          <Button variant="outlined" autoFocus onClick={props.closeModal}>
+            X
           </Button>
         </DialogActions>
       </Dialog>
