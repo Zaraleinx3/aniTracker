@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
     root: {
@@ -6,6 +6,7 @@ const useStyles = makeStyles({
       float: 'left',
       marginLeft: '18px',
       marginBottom: '18px',
+      background: '#1e1e1e',
     },
   });
 

@@ -1,12 +1,12 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import CardActions from '@material-ui/core/CardActions';
-import { MoreVert, PlaylistAdd} from '@material-ui/icons';
-import Icon from '@material-ui/core/Icon';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import CardActions from '@mui/material/CardActions';
+import { MoreVert, PlaylistAdd} from '@mui/icons-material';
+import Icon from '@mui/material/Icon';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Grid from '@mui/material/Grid';
+import Tooltip from '@mui/material/Tooltip';
 
 import { StyledMenu, StyledMenuItem } from '../../../styles/listStyles';
 

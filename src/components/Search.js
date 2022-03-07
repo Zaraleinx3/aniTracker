@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
 
 import useStyles from '../styles/searchStyles';
 
@@ -55,9 +55,9 @@ function Search(props) {
                 <AccordionDetails>
                     <div className={classes.root}>
                         { !props.result.series ? '' : props.result.series.map((series) => (
-                            <BaseMovieSeriesCard  
+                           <BaseMovieSeriesCard  
                                 item={ series }
-                                key={ series.tmdbId}
+                                key={ series.tmdbId }
                                 buttons={"search"}
                             />
                         ))}
@@ -80,7 +80,7 @@ function Search(props) {
                         { !props.result.movies ? '' : props.result.movies.map((movie) => (
                             <BaseMovieSeriesCard  
                                 item={ movie }
-                                key={movie.tmdbId}
+                                key={ movie.tmdbId }
                                 buttons={"search"}
                             />
                         ))}

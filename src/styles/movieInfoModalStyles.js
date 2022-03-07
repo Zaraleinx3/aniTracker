@@ -1,7 +1,7 @@
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
-import MuiButton from '@material-ui/core/Button';
+import { makeStyles, withStyles } from '@mui/styles';
+import MuiDialogContent from '@mui/material/DialogContent';
+import MuiDialogActions from '@mui/material/DialogActions';
+import MuiButton from '@mui/material/Button';
 
 export const useStyles = makeStyles((theme) => ({
     root: {

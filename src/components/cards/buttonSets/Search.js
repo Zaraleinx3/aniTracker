@@ -1,9 +1,9 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import CardActions from '@material-ui/core/CardActions';
-import Tooltip from '@material-ui/core/Tooltip';
-import Grid from '@material-ui/core/Grid';
-import { Assignment, Pause, MoreVert} from '@material-ui/icons';
+import IconButton from '@mui/material/IconButton';
+import CardActions from '@mui/material/CardActions';
+import Tooltip from '@mui/material/Tooltip';
+import Grid from '@mui/material/Grid';
+import { Assignment, Pause, MoreVert} from '@mui/icons-material';
 
 export default function Search(props) {
     return (

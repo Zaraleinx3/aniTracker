@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import { FormControl, FormHelperText, Select, MenuItem } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Rating from '@material-ui/lab/Rating';
-import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import { FormControl, FormHelperText, Select, MenuItem } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Rating from '@mui/material/Rating';
+import Tooltip from '@mui/material/Tooltip';
 
 import { useStyles, DialogContent, DialogActions, CustomButton } from '../../styles/movieInfoModalStyles';
 import * as toast from '../../helper/toast';
@@ -111,7 +111,6 @@ function MovieInfoModal(props) {
             Save ...
           </Button>
           */}
-
 
           <CustomButton variant="outlined" autoFocus onClick={props.closeModal}>
             X

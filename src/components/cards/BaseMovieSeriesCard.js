@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardMedia from '@mui/material/CardMedia';
+import ButtonBase from '@mui/material/ButtonBase';
 
 import useStyles from '../../styles/baseMovieSeriesCardStyles';
 
@@ -40,6 +40,7 @@ function BaseMovieSeriesCard(props) {
 
     if (type === "Series") {
         //TODO: saveSeries
+        console.log(list)
     } else {
         props.saveMovie(props.item);
     }
