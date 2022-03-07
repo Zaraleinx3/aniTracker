@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Home from './components/Home';
 import Navbar from './components/navbar/Navbar';
-import Search from './components/Search';
+import Search from './components/search/Search';
 import MovieModal from './components/modals/MovieInfoModal';
 import SeriesModal from './components/modals/SeriesInfoModal';
 import movieSeriesList from './components/MovieSeriesList';
