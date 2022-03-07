@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Home from './components/Home';
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar/Navbar';
 import Search from './components/Search';
 import MovieModal from './components/modals/MovieInfoModal';
 import SeriesModal from './components/modals/SeriesInfoModal';
