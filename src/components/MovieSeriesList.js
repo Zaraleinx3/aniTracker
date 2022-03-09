@@ -2,29 +2,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import BaseMovieSeriesCard from './cards/BaseMovieSeriesCard';
-import { getList } from '../actions'; 
+import { getList } from '../actions';
 
 class MovieSeriesList extends Component {
 
     constructor(props) {
         super(props);
         this.props.getList(this.props.match.params.listName);
-      }
+    }
 
     /*componentDidMount() {
         //dispatch
         this.props.getList(this.props.match.params.listName); 
-      }*/
+    }*/
 
     render() {
         return (
             <div>
-                <h1>{ this.props.match.params.listName }</h1>
+                <h1>{this.props.match.params.listName}</h1>
                 {
-                    (this.props.list === undefined) ? 'liste leer' : 
+                    (this.props.list === undefined) ? 'liste leer' :
                         (this.props.list.data === undefined) ? 'liste leer' : this.props.list.data.map((item) => (
-                            <BaseMovieSeriesCard  
-                                item={ item }
+                            <BaseMovieSeriesCard
+                                item={item}
                                 key={item.tmdbId}
                                 buttons={"search"}
                             />
@@ -44,6 +44,6 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(
-  mapStateToProps, 
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(MovieSeriesList);

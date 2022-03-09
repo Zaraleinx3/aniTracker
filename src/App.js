@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route} from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
@@ -19,7 +19,8 @@ import movieSeriesList from './components/MovieSeriesList';
 const theme = createTheme({
   palette: {
     mode: 'dark',
-}});
+  }
+});
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
       <SeriesModal />
 
       <ToastContainer
-        theme= "dark"
+        theme="dark"
         position="bottom-right"
         autoClose={7000}
         hideProgressBar={false}

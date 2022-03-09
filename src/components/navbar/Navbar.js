@@ -64,60 +64,60 @@ export default function Navbar(props) {
         </AtDrawerHeader>
         <Divider />
         <List>
-        {
+          {
             navItems().map((item, key) => (
-                <ListItemButton 
-                    key={key} 
-                    component={Link} 
-                    to={item.route}
-                    sx={{
-                        minHeight: 48,
-                        justifyContent: open ? 'initial' : 'center',
-                        px: 2.5,
-                    }}>
-                        <ListItemIcon
-                            sx={{
-                                minWidth: 0,
-                                mr: open ? 3 : 'auto',
-                                justifyContent: 'center',
-                            }}>
-                            <Icon>{item.icon}</Icon>
-                        </ListItemIcon>
-                    <ListItemText primary={item.description} sx={{ opacity: open ? 1 : 0 }}/>
-                </ListItemButton>
+              <ListItemButton
+                key={key}
+                component={Link}
+                to={item.route}
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}>
+                  <Icon>{item.icon}</Icon>
+                </ListItemIcon>
+                <ListItemText primary={item.description} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
             ))
           }
         </List>
         <Divider />
         <List>
-        {
+          {
             providerList().map((item, key) => (
-                <a href={item.link} key={key} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: '#fff'}}>
-                    <ListItemButton 
-                        sx={{
-                            minHeight: 48,
-                            justifyContent: open ? 'initial' : 'center',
-                            px: 2.5,
-                        }}>
-                        <ListItemIcon
-                            sx={{
-                                minWidth: 0,
-                                mr: open ? 3 : 'auto',
-                                justifyContent: 'center',
-                                width: '25px'
-                            }}>
-                            <img src={item.icon} alt={item.alt} style={{width: '25px'}} />
-                        </ListItemIcon>
-                    <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }}/>
-                    </ListItemButton>
-                </a>
+              <a href={item.link} key={key} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#fff' }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                      width: '25px'
+                    }}>
+                    <img src={item.icon} alt={item.alt} style={{ width: '25px' }} />
+                  </ListItemIcon>
+                  <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </a>
             ))
           }
         </List>
       </AtDrawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <AtDrawerHeader />
-            {props.content}
+        {props.content}
       </Box>
     </Box>
   );

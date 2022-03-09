@@ -33,7 +33,7 @@ const Search = (props) => {
                 <InputBase
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Search"
-                    inputProps={{ 'aria-label': 'Search'}}
+                    inputProps={{ 'aria-label': 'Search' }}
                     onKeyDown={keyPress}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -44,7 +44,7 @@ const Search = (props) => {
 
             <AtAccordion expanded={expanded === 'series'} onChange={handleAccordionChange('series')}>
                 <AtAccordionSummary aria-controls="series-content" id="searchSeriesAccordion">
-                   Series 
+                    Series
                 </AtAccordionSummary>
                 <AtAccordionDetails>
                     {!props.result.series ? '' : props.result.series.map((series) => (

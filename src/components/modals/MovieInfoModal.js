@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Dialog from '@mui/material/Dialog';
 import { FormControl, FormHelperText, Select, MenuItem } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -12,7 +13,20 @@ import * as toast from '../../helper/toast';
 
 import { movieModalClose, saveMovie } from '../../actions';
 
-function MovieInfoModal(props) {
+MovieInfoModal.propTypes = {
+    payload: PropTypes.shape({
+      poster: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      overview: PropTypes.string.isRequired,
+      flatrate: PropTypes.array.isRequired,
+      lists: PropTypes.object.isRequired
+    }),
+    saveMovie: PropTypes.func.isRequired,
+    closeModal: PropTypes.func.isRequired,
+    open: PropTypes.func.isRequired,
+}
+
+const MovieInfoModal = (props) => {
 
   const { poster, title, overview, flatrate } = props.payload;
 
@@ -22,7 +36,7 @@ function MovieInfoModal(props) {
     //TODO: update Select to state
   };
 
-  const handleAdd = (event) => {
+  const handleAdd = () => {
     if (list === '') {
       toast.error('Es wurde keine Liste ausgewählt.');
     } else {
