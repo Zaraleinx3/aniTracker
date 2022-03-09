@@ -10,25 +10,32 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Rating from '@mui/material/Rating';
-import Chip from '@mui/material/Chip';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Box from '@mui/material/Box';
 
 import { Assignment, Pause, MoreVert} from '@mui/icons-material';
 
-import { useStyles, AccordionSummaryStyle, DialogContent, DialogActions } from '../../styles/seriesInfoModalStyles';
+import { 
+  ProviderLogo, 
+  DialogContent, 
+  DialogActions, 
+  AccordionSummary, 
+  DialogSeasonsContent, 
+  OverviewText, 
+  Poster, 
+  InfoBlock, 
+  Tag,
+  SeasonRating, 
+  Episode,
+  ButtonBox
+} from './InfoModal.overrides';
+
 import * as toast from '../../helper/toast';
 
 import { seriesModalClose, saveSeason } from '../../actions';
 
 function SeriesInfoModal(props) {
-  const classes = useStyles();
-  
   const { poster, title, overview, genres, seasons, flatrate } = props.payload;
 
   const handleAdd = (event) => {
@@ -50,49 +57,47 @@ function SeriesInfoModal(props) {
           },
         }}S
       >
-        <DialogContent dividers className={classes.overflowTop}>
+        <DialogContent dividers>
           <Grid container spacing={3}>
             <Grid item>
-                <img
+                <Poster
                   src={poster}
                   alt={title}
-                  className={classes.cover}
                 />
               </Grid>
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
-                  <Grid item xs className={classes.descriptionBlock}>
+                  <InfoBlock item xs>
                     <Typography variant="h5" paragraph>{title}</Typography>    
-                    <Typography paragraph className={classes.description}>
+                    <OverviewText paragraph>
                       { overview === "" ? 'Keine Beschreibung vorhanden.' : overview}
-                    </Typography>
+                    </OverviewText>
                       { genres ? genres.map(genre => (
-                        <Chip key={genre.id} label={genre.name} className={classes.chip} />
+                        <Tag key={genre.id} label={genre.name}/>
                       )): ''}
                       <br />
                       { /* TODO: add Rating */ }
                     <Rating name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
                     { flatrate ? flatrate.map(provider => (
-                        <Tooltip key={provider.provider_id} title={provider.provider_name}>
-                          <img
-                            src={"https://www.themoviedb.org/t/p/original" + provider.logo_path}
-                            alt={provider.provider_name}
-                            className={classes.providerLogo}
-                          />
+                      <Tooltip key={provider.provider_id} title={provider.provider_name}>
+                        <ProviderLogo
+                          src={"https://www.themoviedb.org/t/p/original" + provider.logo_path}
+                          alt={provider.provider_name}
+                        />
                       </Tooltip>
                     )): ''}
-                  </Grid>
+                  </InfoBlock>
                 </Grid>
               </Grid>
           </Grid>
         </DialogContent>
 
-        <DialogContent dividers className={classes.scrollbar}>
+        <DialogSeasonsContent dividers>
           <Grid container spacing={3}>
-            <Grid item className={classes.fullWidth}>
+            <Grid item sx={{width: '100%'}}>
               { seasons ? seasons.map(season => (
                 <Accordion key={season.season_number}>
-                  <AccordionSummaryStyle
+                  <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="season"
                     id={season.season_number}
@@ -103,20 +108,9 @@ function SeriesInfoModal(props) {
                           onFocus={(event) => event.stopPropagation()}
                           control={<Checkbox />}
                           label={`${season.season_number}: ${season.name}`}
-                    />
-                   
-                      <Rating name="half-rating-read" defaultValue={0} precision={0.5} className={classes.seasonRating} readOnly />
-                  
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        '& > *': {
-                          m: 1,
-                        },
-                      }}
-                    >
+                    />                   
+                      <SeasonRating name="half-rating-read" defaultValue={0} precision={0.5} readOnly />            
+                    <ButtonBox>
                       <ButtonGroup variant="text" aria-label="text button group">
                         <Tooltip title="Auf Todo setzen">
                           <IconButton aria-label="todo" onClick={() => {props.saveItem("todo")}}>
@@ -134,12 +128,12 @@ function SeriesInfoModal(props) {
                           </IconButton>
                         </Tooltip>
                       </ButtonGroup>
-                    </Box>
-                  </AccordionSummaryStyle>
+                    </ButtonBox>
+                  </AccordionSummary>
                   <AccordionDetails>
-                    <div className={classes.fullWidth}>
+                    <div sx={{width: '100%'}}>
                         { season.episode_count ? [...Array(season.episode_count)].map((e,i) => (
-                          <div className={classes.episode} key={i}>
+                          <Episode key={i}>
                             <Checkbox
                                 edge="start"
                                 tabIndex={-1}
@@ -147,7 +141,7 @@ function SeriesInfoModal(props) {
                                 inputProps={{ 'aria-labelledby': i }}
                               />
                               <span id={i}>{i + 1}</span>
-                          </div>
+                          </Episode>
                         )): ''}
 
                     </div>
@@ -156,7 +150,7 @@ function SeriesInfoModal(props) {
               )): ''}
             </Grid>
           </Grid>
-        </DialogContent>
+        </DialogSeasonsContent>
         <DialogActions>
           <Button variant="outlined" autoFocus onClick={props.closeModal}>
             X
