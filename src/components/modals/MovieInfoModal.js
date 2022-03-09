@@ -1,23 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import { FormControl, FormHelperText, Select, MenuItem } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Rating from '@mui/material/Rating';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useStyles, DialogContent, DialogActions, CustomButton } from '../../styles/movieInfoModalStyles';
+import { ProviderLogo, DialogContent, DialogActions, CustomButton, OverviewText, Poster } from './InfoModal.overrides';
 import * as toast from '../../helper/toast';
 
 import { movieModalClose, saveMovie } from '../../actions';
-import { movieModal } from '../../reducers/movieModal';
 
 function MovieInfoModal(props) {
-  const classes = useStyles();
 
   const { poster, title, overview, flatrate } = props.payload;
 
@@ -43,7 +38,7 @@ function MovieInfoModal(props) {
       {/* onClose in Dialog Element: Background Click*/ }
       <Dialog 
         onClose={props.closeModal} 
-        aria-labelledby="customized-dialog-title" 
+        aria-labelledby="MovieInfoModal" 
         open={props.open}
         fullWidth={true}
         maxWidth={'md'}
@@ -56,24 +51,22 @@ function MovieInfoModal(props) {
         <DialogContent dividers>
           <Grid container spacing={3}>
             <Grid item>
-                <img
+                <Poster
                   src={poster}
                   alt={title}
-                  className={classes.cover}
                 />
               </Grid>
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item xs>
                     <Typography variant="h5" paragraph>{title}</Typography>    
-                    <Typography className={classes.bottomSpacing}>{overview}</Typography>
-                    <Rating name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
+                    <OverviewText sx={{marginBottom: "10px"}}>{overview}</OverviewText>
+                    <Rating name="movieRating" defaultValue={5} precision={0.5} readOnly />
                     { flatrate ? flatrate.map(provider => (
                         <Tooltip key={provider.provider_id} title={provider.provider_name}>
-                          <img
+                          <ProviderLogo
                             src={"https://www.themoviedb.org/t/p/original" + provider.logo_path}
                             alt={provider.provider_name}
-                            className={classes.providerLogo}
                           />
                       </Tooltip>
                     )): ''}
@@ -87,8 +80,8 @@ function MovieInfoModal(props) {
         <FormControl sx={{ m: 1, minWidth: 80 }}>
           <FormHelperText>Hinzufügen zu ...</FormHelperText>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="setToListSelect"
+            id="setToListSelect"
             value={list}
             label="Hinzufügen"
             onChange= {handleChange}
