@@ -1,19 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardMedia from '@mui/material/CardMedia';
+import ButtonBase from '@mui/material/ButtonBase';
 
-import useStyles from '../../styles/baseMovieSeriesCardStyles';
+import { AtCard } from './BaseMovieSeriesCard.overrides';
 
 import { openMovieModal, openSeriesModal, saveMovie } from '../../actions';
-import { seriesModal } from '../../reducers/seriesModal';
 import { default as SearchButtonSet } from '../cards/buttonSets/Search';
 
-function BaseMovieSeriesCard(props) {  
-  const classes = useStyles();
-  const url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2";
+function BaseMovieSeriesCard(props) { 
   
   const {poster, title, type} = props.item;
 
@@ -40,13 +37,14 @@ function BaseMovieSeriesCard(props) {
 
     if (type === "Series") {
         //TODO: saveSeries
+        console.log(list)
     } else {
         props.saveMovie(props.item);
     }
   }
 
   return (
-    <Card className={`${classes.root} ${props.className}`}>
+    <AtCard>
           <CardActionArea onClick={() => openModal(props)}>
               <CardMedia
                   component="img"
@@ -57,7 +55,7 @@ function BaseMovieSeriesCard(props) {
               />
           </CardActionArea> 
           { renderButtonSet() }
-    </Card>
+    </AtCard>
   );
 }
 

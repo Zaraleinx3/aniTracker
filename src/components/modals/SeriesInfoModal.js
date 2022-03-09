@@ -1,29 +1,46 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Rating from '@material-ui/lab/Rating';
-import Chip from '@material-ui/core/Chip';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Rating from '@mui/material/Rating';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { useStyles, AccordionSummaryStyle, DialogContent, DialogActions } from '../../styles/seriesInfoModalStyles';
+import { Assignment, Pause, MoreVert} from '@mui/icons-material';
 
-import { seriesModalClose } from '../../actions';
+import { 
+  ProviderLogo, 
+  DialogContent, 
+  DialogActions, 
+  AccordionSummary, 
+  DialogSeasonsContent, 
+  OverviewText, 
+  Poster, 
+  InfoBlock, 
+  Tag,
+  SeasonRating, 
+  Episode,
+  ButtonBox
+} from './InfoModal.overrides';
+
+import * as toast from '../../helper/toast';
+
+import { seriesModalClose, saveSeason } from '../../actions';
 
 function SeriesInfoModal(props) {
-  const classes = useStyles();
-  
   const { poster, title, overview, genres, seasons, flatrate } = props.payload;
+
+  const handleAdd = (event) => {
+    console.log("hier");
+  }
 
   return (
     <div>
@@ -36,55 +53,54 @@ function SeriesInfoModal(props) {
         maxWidth={'md'}
         PaperProps={{
           style: {
-            backgroundColor: "#212326",
+            backgroundColor: "rgb(0 0 0)",
           },
         }}S
       >
-        <DialogContent dividers className={classes.overflowTop}>
+        <DialogContent dividers>
           <Grid container spacing={3}>
             <Grid item>
-                <img
+                <Poster
                   src={poster}
                   alt={title}
-                  className={classes.cover}
                 />
               </Grid>
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
-                  <Grid item xs>
+                  <InfoBlock item xs>
                     <Typography variant="h5" paragraph>{title}</Typography>    
-                    <Typography paragraph className={classes.description}>
+                    <OverviewText paragraph>
                       { overview === "" ? 'Keine Beschreibung vorhanden.' : overview}
-                    </Typography>
+                    </OverviewText>
                       { genres ? genres.map(genre => (
-                        <Chip key={genre.id} label={genre.name} className={classes.chip} />
+                        <Tag key={genre.id} label={genre.name}/>
                       )): ''}
                       <br />
+                      { /* TODO: add Rating */ }
                     <Rating name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
                     { flatrate ? flatrate.map(provider => (
-                        <Tooltip key={provider.provider_id} title={provider.provider_name}>
-                          <img
-                            src={"https://www.themoviedb.org/t/p/original" + provider.logo_path}
-                            alt={provider.provider_name}
-                            className={classes.providerLogo}
-                          />
+                      <Tooltip key={provider.provider_id} title={provider.provider_name}>
+                        <ProviderLogo
+                          src={"https://www.themoviedb.org/t/p/original" + provider.logo_path}
+                          alt={provider.provider_name}
+                        />
                       </Tooltip>
                     )): ''}
-                  </Grid>
+                  </InfoBlock>
                 </Grid>
               </Grid>
           </Grid>
         </DialogContent>
 
-        <DialogContent dividers className={classes.scrollbar}>
+        <DialogSeasonsContent dividers>
           <Grid container spacing={3}>
-            <Grid item className={classes.fullWidth}>
+            <Grid item sx={{width: '100%'}}>
               { seasons ? seasons.map(season => (
                 <Accordion key={season.season_number}>
-                  <AccordionSummaryStyle
+                  <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                    aria-controls="season"
+                    id={season.season_number}
                   >
                     <FormControlLabel
                           aria-label="Acknowledge"
@@ -92,13 +108,32 @@ function SeriesInfoModal(props) {
                           onFocus={(event) => event.stopPropagation()}
                           control={<Checkbox />}
                           label={`${season.season_number}: ${season.name}`}
-                    />
-                    <Rating name="half-rating-read" defaultValue={0} precision={0.5} className={classes.seasonRating} readOnly />
-                  </AccordionSummaryStyle>
+                    />                   
+                      <SeasonRating name="half-rating-read" defaultValue={0} precision={0.5} readOnly />            
+                    <ButtonBox>
+                      <ButtonGroup variant="text" aria-label="text button group">
+                        <Tooltip title="Auf Todo setzen">
+                          <IconButton aria-label="todo" onClick={() => {props.saveItem("todo")}}>
+                              <Assignment />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Auf Warten setzen">
+                          <IconButton aria-label="waiting" onClick={() => {props.saveItem("waiting")}}>
+                              <Pause />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Optionen">
+                          <IconButton aria-label="options" onClick={() => {console.log("options")}}>
+                              <MoreVert />
+                          </IconButton>
+                        </Tooltip>
+                      </ButtonGroup>
+                    </ButtonBox>
+                  </AccordionSummary>
                   <AccordionDetails>
-                    <div className={classes.fullWidth}>
+                    <div sx={{width: '100%'}}>
                         { season.episode_count ? [...Array(season.episode_count)].map((e,i) => (
-                          <div className={classes.episode} key={i}>
+                          <Episode key={i}>
                             <Checkbox
                                 edge="start"
                                 tabIndex={-1}
@@ -106,7 +141,7 @@ function SeriesInfoModal(props) {
                                 inputProps={{ 'aria-labelledby': i }}
                               />
                               <span id={i}>{i + 1}</span>
-                          </div>
+                          </Episode>
                         )): ''}
 
                     </div>
@@ -115,13 +150,10 @@ function SeriesInfoModal(props) {
               )): ''}
             </Grid>
           </Grid>
-        </DialogContent>
+        </DialogSeasonsContent>
         <DialogActions>
-          <Button autoFocus onClick={() => console.log("Save")} color="primary">
-            Save
-          </Button>
-          <Button autoFocus onClick={props.closeModal} color="primary">
-            Close
+          <Button variant="outlined" autoFocus onClick={props.closeModal}>
+            X
           </Button>
         </DialogActions>
       </Dialog>

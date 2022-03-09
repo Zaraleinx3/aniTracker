@@ -148,6 +148,9 @@ export const saveMovie = (movie) => (dispatch) => {
         toast.error(message);
     }
 }
+// TODO: seasonIsSaving
+// TODO: seasonIsSaved
+// TODO: saveSeason
 
 export const listIsLoading = () => ({
     type: types.LIST_IS_LOADING,

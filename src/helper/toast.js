@@ -28,7 +28,7 @@ export const warn = (message) =>
     toast.warn(message, {
         className: 'black-background',
         position: "bottom-right",
-        autoClose: 7000,
+        autoClose: false,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -40,7 +40,7 @@ export const error = (message) =>
     toast.error(message, {
         className: 'black-background',
         position: "bottom-right",
-        autoClose: 7000,
+        autoClose: false,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

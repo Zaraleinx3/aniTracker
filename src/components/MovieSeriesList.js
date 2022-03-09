@@ -25,8 +25,8 @@ class MovieSeriesList extends Component {
                         (this.props.list.data === undefined) ? 'liste leer' : this.props.list.data.map((item) => (
                             <BaseMovieSeriesCard  
                                 item={ item }
-                                key={item.id}
-                            buttons={"search"}
+                                key={item.tmdbId}
+                                buttons={"search"}
                             />
                         ))
                 }

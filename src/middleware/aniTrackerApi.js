@@ -24,7 +24,6 @@ api.SaveMovie = (movie) => {
         return data;
     })
     .catch(err => {
-        //console.log(err);
         throw(err);
     })
 }
@@ -33,11 +32,11 @@ api.SaveMovie = (movie) => {
 
 // Delete Movie
 
-// **************************** Series ***********************
+// **************************** Seasons ***********************
 
-// Get Series by Id (for detail Modal?)
-api.GetSeriesById = (seriesId) => {
-    return axios.get(`${domain}/api/Series`, seriesId)
+// Get Season by Id TODO: richtig machen
+api.GetSeasonsById = (seasonId) => {
+    return axios.get(`${domain}/api/Series`, seasonId)
     .then((data) => {
         console.log('data:', data);
     })
@@ -47,9 +46,9 @@ api.GetSeriesById = (seriesId) => {
     })
 }
 
-// Save Series
-api.SaveSeries = (series) => {
-    return axios.post(`${domain}/api/Series`, series)
+// Save Season TODO: richtig machen
+api.SaveSeason = (season) => {
+    return axios.post(`${domain}/api/Series`, season)
     .then((data) => {
         console.log('data:', data);
     })
@@ -59,13 +58,15 @@ api.SaveSeries = (series) => {
     })
 }
 
-// Update Series
+// Update Season
 
-// Delete Series
+// Delete Season
+
+// **************************** Media ***********************
 
 // GetAllByTag
 api.GetAllbyTag = (tag) => {
-    return axios.get(`${domain}api/Movies/${tag}`)
+    return axios.get(`${domain}api/Media/tag/${tag}`)
     .then((data) => {
         console.log('data:', data);
     })
