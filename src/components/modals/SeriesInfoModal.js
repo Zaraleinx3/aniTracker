@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+
+import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import Typography from "@mui/material/Typography";
@@ -33,12 +35,12 @@ import {
 
 import { seriesModalClose } from "../../actions";
 
-function SeriesInfoModal(props) {
+const SeriesInfoModal = (props) => {
   const { poster, title, overview, genres, seasons, flatrate } = props.payload;
 
-  const handleAdd = (event) => {
+  /*const handleAdd = () => {
     console.log("hier");
-  };
+  };*/
 
   return (
     <div>
@@ -200,7 +202,23 @@ function SeriesInfoModal(props) {
       </Dialog>
     </div>
   );
-}
+};
+
+SeriesInfoModal.propTypes = {
+  payload: PropTypes.shape({
+    poster: PropTypes.string,
+    title: PropTypes.string,
+    overview: PropTypes.string,
+    genres: PropTypes.array,
+    seasons: PropTypes.array,
+    flatrate: PropTypes.array,
+    lists: PropTypes.object,
+  }),
+  handleAdd: PropTypes.func,
+  closeModal: PropTypes.func.isRequired,
+  open: PropTypes.bool,
+  saveItem: PropTypes.func,
+};
 
 const mapStateToProps = (state) => ({
   payload: state.seriesModal.payload,

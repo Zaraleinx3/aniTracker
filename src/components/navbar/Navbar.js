@@ -1,26 +1,32 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
+import * as React from "react";
+import { Link } from "react-router-dom";
 
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import PropTypes from "prop-types";
 
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Icon from '@mui/material/Icon';
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 
-import { AtAppBar, AtDrawer, AtDrawerHeader } from './Navbar.overrides';
-import navItems from '../../mocks/api/navItems';
-import providerList from '../../mocks/api/providerList';
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import CssBaseline from "@mui/material/CssBaseline";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Icon from "@mui/material/Icon";
+
+import { AtAppBar, AtDrawer, AtDrawerHeader } from "./Navbar.overrides";
+import navItems from "../../mocks/api/navItems";
+import providerList from "../../mocks/api/providerList";
+
+Navbar.propTypes = {
+  content: PropTypes.element.isRequired,
+};
 
 export default function Navbar(props) {
   const theme = useTheme();
@@ -35,7 +41,7 @@ export default function Navbar(props) {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AtAppBar position="fixed" open={open}>
         <Toolbar>
@@ -46,7 +52,7 @@ export default function Navbar(props) {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && { display: 'none' }),
+              ...(open && { display: "none" }),
             }}
           >
             <MenuIcon />
@@ -59,60 +65,80 @@ export default function Navbar(props) {
       <AtDrawer variant="permanent" open={open}>
         <AtDrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === "rtl" ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
           </IconButton>
         </AtDrawerHeader>
         <Divider />
         <List>
-          {
-            navItems().map((item, key) => (
-              <ListItemButton
-                key={key}
-                component={Link}
-                to={item.route}
+          {navItems().map((item, key) => (
+            <ListItemButton
+              key={key}
+              component={Link}
+              to={item.route}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}>
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}>
-                  <Icon>{item.icon}</Icon>
-                </ListItemIcon>
-                <ListItemText primary={item.description} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            ))
-          }
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <Icon>{item.icon}</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={item.description}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          ))}
         </List>
         <Divider />
         <List>
-          {
-            providerList().map((item, key) => (
-              <a href={item.link} key={key} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#fff' }}>
-                <ListItemButton
+          {providerList().map((item, key) => (
+            <a
+              href={item.link}
+              key={key}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none", color: "#fff" }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
                   sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}>
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                      width: '25px'
-                    }}>
-                    <img src={item.icon} alt={item.alt} style={{ width: '25px' }} />
-                  </ListItemIcon>
-                  <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </a>
-            ))
-          }
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                    width: "25px",
+                  }}
+                >
+                  <img
+                    src={item.icon}
+                    alt={item.alt}
+                    style={{ width: "25px" }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.name}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </a>
+          ))}
         </List>
       </AtDrawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

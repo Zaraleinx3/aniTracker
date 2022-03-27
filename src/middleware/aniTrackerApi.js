@@ -1,32 +1,34 @@
-import axios from 'axios';
+import axios from "axios";
 
-var api = {}
-const domain = 'https://localhost:5001/';
+var api = {};
+const domain = "https://localhost:5001/";
 
 // **************************** Movie ***********************
 
 // Get Movie by Id (for detail Modal?)
 api.GetMovieById = (movieId) => {
-    return axios.get(`${domain}api/Movies`, movieId)
+  return axios
+    .get(`${domain}api/Movies`, movieId)
     .then((data) => {
-        console.log('data:', data);
+      console.log("data:", data);
     })
-    .catch(err => {
-        console.log(err);
-        throw(err);
-    })
-}
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+};
 
 // Save Movie
 api.SaveMovie = (movie) => {
-    return axios.post(`${domain}api/Movie`, movie)
+  return axios
+    .post(`${domain}api/Movie`, movie)
     .then((data) => {
-        return data;
+      return data;
     })
-    .catch(err => {
-        throw(err);
-    })
-}
+    .catch((err) => {
+      throw err;
+    });
+};
 
 // Update Movie
 
@@ -36,27 +38,29 @@ api.SaveMovie = (movie) => {
 
 // Get Season by Id TODO: richtig machen
 api.GetSeasonsById = (seasonId) => {
-    return axios.get(`${domain}/api/Series`, seasonId)
+  return axios
+    .get(`${domain}/api/Series`, seasonId)
     .then((data) => {
-        console.log('data:', data);
+      console.log("data:", data);
     })
-    .catch(err => {
-        console.log(err);
-        throw(err);
-    })
-}
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+};
 
 // Save Season TODO: richtig machen
 api.SaveSeason = (season) => {
-    return axios.post(`${domain}/api/Series`, season)
+  return axios
+    .post(`${domain}/api/Series`, season)
     .then((data) => {
-        console.log('data:', data);
+      console.log("data:", data);
     })
-    .catch(err => {
-        console.log(err);
-        throw(err);
-    })
-}
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+};
 
 // Update Season
 
@@ -66,27 +70,29 @@ api.SaveSeason = (season) => {
 
 // GetAllByTag
 api.GetAllbyTag = (tag) => {
-    return axios.get(`${domain}api/Media/tag/${tag}`)
+  return axios
+    .get(`${domain}api/Media/tag/${tag}`)
     .then((data) => {
-        console.log('data:', data);
+      console.log("data:", data);
     })
-    .catch(err => {
-        console.log(err);
-        throw(err);
-    })
-}
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+};
 
 // GetAllByList
 api.GetAllbyList = (list) => {
-    return axios.get(`${domain}api/Media/list/${list}`) // TODO: change "/api/Movies" with the new Controller
+  return axios
+    .get(`${domain}api/Media/list/${list}`) // TODO: change "/api/Movies" with the new Controller
     .then((data) => {
-        console.log('data:', data);
-        return data;
+      console.log("data:", data);
+      return data;
     })
-    .catch(err => {
-        console.log(err);
-        throw(err);
-    })
-}
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+};
 
 export default api;
